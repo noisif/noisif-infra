@@ -66,6 +66,8 @@ resource "cloudflare_zone_settings_override" "website_settings" {
     always_use_https = "on"
     minify {
       html = "on"
+      css  = "on"
+      js   = "on"
     }
     min_tls_version = "1.2"
   }
