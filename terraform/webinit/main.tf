@@ -53,26 +53,45 @@ resource "cloudflare_record" "website_dns" {
   proxied = true
 }
 
+resource "cloudflare_redirect_rule" "www_to_root" {
+  zone_id = var.cloudflare_zone_id
+  name    = "Redirect WWW to root"
+  status  = "active"
+
+  trigger_expression = "http.host eq \"www.noisif.xyz\""
+
+  action {
+    type = "redirect"
+    redirect {
+      target_url {
+        expression = "concat(\"https://noisif.xyz\", http.request.uri.path)"
+      }
+      status_code           = 301
+      preserve_query_string = true
+    }
+  }
+}
+
 resource "cloudflare_ruleset" "www_redirect" {
   zone_id     = var.cloudflare_zone_id
   name        = "Redirect WWW to Root"
   kind        = "zone"
   phase       = "http_request_dynamic_redirect"
 
-  rules = [{
-    description = "WWW redirect rule"
+  rules {
     expression  = "(http.host eq \"www.noisif.xyz\")"
     action      = "redirect"
     enabled     = true
 
-    action_parameters = {
-      from_value = {
+    action_parameters {
+      from_value {
         status_code           = 301
         preserve_query_string = true
-        target_url = {
+        
+        target_url {
           expression = "concat(\"https://noisif.xyz\", http.request.uri.path)"
         }
       }
     }
-  }]
+  }
 }
