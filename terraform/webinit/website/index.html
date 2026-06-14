@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NOISIF | Community audio platform and soundboard system for Discord</title>
+  <link rel="icon" href="./favicon-32.ico" sizes="any">
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    .container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 100vh;
+    }
+
+    .logo {
+      width: 200px;
+      height: 200px;
+    }
+
+    .gradient {
+      position: fixed;
+      opacity: .5;
+      z-index: -1;
+    }
+
+    .left-gradient {
+      left: -20%;
+      bottom: -30%;
+    }
+
+    .right-gradient {
+      top: -60%;
+      right: -45%;
+      rotate: 12deg;
+    }
+  </style>
+  <script defer src="https://analytics.miloszgilga.pl/script.js"
+    data-website-id="da43f803-295a-4ce3-9a9e-ad26e4d53b2d"></script>
+</head>
+
+<body class="container">
+  <div class="gradient left-gradient">
+    <img src="./grad-left.webp">
+  </div>
+  <div class="gradient right-gradient">
+    <img src="./grad-right.webp">
+  </div>
+  <a href="https://github.com/noisif">
+    <img src="./logo.svg" alt="logo" class="logo">
+  </a>
+</body>
+
+</html>

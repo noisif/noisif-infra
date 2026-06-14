@@ -1,0 +1,6 @@
+{
+    "recommendations": [
+        "hashicorp.terraform",
+        "k--kato.intellij-idea-keybindings",
+    ]
+}

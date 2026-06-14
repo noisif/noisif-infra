@@ -1,0 +1,46 @@
+name: Deploy init website
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'main.tf'
+      - 'provider.tf'
+      - 'variables.tf'
+      - 'webinit/**'
+
+jobs:
+  terraform:
+    name: 'Terraform'
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: ./terraform
+
+    env:
+      TF_VAR_gcp_project_id: ${{ secrets.GCP_PROJECT_ID }}
+      TF_VAR_cloudflare_api_token: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      TF_VAR_cloudflare_zone_id: ${{ secrets.CLOUDFLARE_ZONE_ID }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Auth to GCP
+        uses: google-github-actions/auth@v1
+        with:
+          credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
+
+      - name: Setup TF
+        uses: hashicorp/setup-terraform@v2
+
+      - name: TF init
+        run: terraform init
+
+      - name: TF plan
+        run: terraform plan
+
+      - name: TF apply
+        run: terraform apply -auto-approve

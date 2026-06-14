@@ -1,0 +1,21 @@
+{
+  "editor.detectIndentation": false,
+  "editor.fontFamily": "Consolas",
+  "editor.fontSize": 13,
+  "editor.formatOnSave": true,
+  "editor.minimap.enabled": false,
+  "editor.renderWhitespace": "all",
+  "editor.rulers": [
+    120
+  ],
+  "editor.stickyScroll.enabled": false,
+  "editor.stickyScroll.scrollWithEditor": false,
+  "editor.tabSize": 2,
+  "explorer.autoReveal": false,
+  "files.insertFinalNewline": true,
+  "git.autofetch": false,
+  "workbench.editor.enablePreview": false,
+  "workbench.tree.enableStickyScroll": false,
+  "workbench.tree.indent": 20,
+  "workbench.tree.renderIndentGuides": "always",
+}
