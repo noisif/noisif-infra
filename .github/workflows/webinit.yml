@@ -36,6 +36,11 @@ jobs:
       - name: TF init
         run: terraform init
 
+      - name: Wyczyść stare rekordy DNS ze stanu
+        run: |
+          terraform state rm cloudflare_record.website_dns || true
+          terraform state rm cloudflare_record.www_dns || true
+
       - name: TF plan
         run: terraform plan
 
