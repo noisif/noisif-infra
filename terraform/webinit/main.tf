@@ -53,10 +53,21 @@ resource "cloudflare_record" "website_dns" {
   proxied = true
 }
 
-resource "cloudflare_record" "www_dns" {
+resource "cloudflare_redirect_rule" "www_to_root" {
   zone_id = var.cloudflare_zone_id
-  name    = "www"
-  content = "noisif.xyz"
-  type    = "CNAME"
-  proxied = true
+  name    = "Redirect WWW to root"
+  status  = "active"
+
+  trigger_expression = "http.host eq \"www.noisif.xyz\""
+
+  action {
+    type = "redirect"
+    redirect {
+      target_url {
+        expression = "concat(\"https://noisif.xyz\", http.request.uri.path)"
+      }
+      status_code           = 301
+      preserve_query_string = true
+    }
+  }
 }
