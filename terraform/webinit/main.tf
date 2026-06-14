@@ -42,7 +42,7 @@ resource "google_storage_bucket_object" "website_files" {
     regex("\\.[^.]+$", each.value),
     "application/octet-stream"
   )
-  cache_control = "public, max-age=3600"
+  cache_control = "public, max-age=60"
 }
 
 resource "cloudflare_record" "website_dns" {
