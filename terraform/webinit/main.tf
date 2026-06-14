@@ -45,7 +45,7 @@ resource "google_storage_bucket_object" "website_files" {
 resource "cloudflare_record" "website_dns" {
   zone_id = var.cloudflare_zone_id
   name    = "noisif.xyz"
-  value   = "c.storage.googleapis.com"
+  content = "c.storage.googleapis.com"
   type    = "CNAME"
   proxied = true
 }
@@ -53,7 +53,7 @@ resource "cloudflare_record" "website_dns" {
 resource "cloudflare_record" "www_dns" {
   zone_id = var.cloudflare_zone_id
   name    = "www"
-  value   = "noisif.xyz"
+  content = "noisif.xyz"
   type    = "CNAME"
   proxied = true
 }
