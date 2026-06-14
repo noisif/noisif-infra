@@ -22,6 +22,7 @@ locals {
 
   mime_types = {
     ".html"  = "text/html"
+    ".css"   = "text/css"
     ".svg"   = "image/svg+xml"
     ".ico"   = "image/x-icon"
     ".webp"  = "image/webp"
