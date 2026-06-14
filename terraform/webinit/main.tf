@@ -53,6 +53,14 @@ resource "cloudflare_record" "website_dns" {
   proxied = true
 }
 
+resource "cloudflare_record" "www_dns" {
+  zone_id = var.cloudflare_zone_id
+  name    = "www"
+  content = "noisif.xyz"
+  type    = "CNAME"
+  proxied = true
+}
+
 resource "cloudflare_ruleset" "www_redirect" {
   zone_id     = var.cloudflare_zone_id
   name        = "Redirect WWW to Root"
