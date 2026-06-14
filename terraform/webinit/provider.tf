@@ -11,7 +11,7 @@ terraform {
   }
 
   backend "gcs" {
-    bucket = "noisif-tf-state-xyz" 
+    bucket = "noisif-tf-state"
     prefix = "terraform/state/webinit"
   }
 }
