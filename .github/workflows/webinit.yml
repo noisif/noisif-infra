@@ -5,6 +5,7 @@ on:
     branches:
       - master
     paths:
+      - '.github/workflows/webinit.yml'
       - 'terraform/webinit/**'
 
 jobs:
