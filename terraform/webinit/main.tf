@@ -85,3 +85,4 @@ resource "cloudflare_zone_setting" "minify_code" {
     js   = "on"
   })
 }
+
