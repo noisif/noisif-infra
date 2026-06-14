@@ -9,9 +9,10 @@ terraform {
       version = "~> 4.0"
     }
   }
+
   backend "gcs" {
-    bucket  = "noisif-tf-state"
-    prefix  = "terraform/state"
+    bucket = "noisif-tf-state-xyz" 
+    prefix = "terraform/state/webinit"
   }
 }
 

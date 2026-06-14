@@ -3,12 +3,9 @@ name: Deploy init website
 on:
   push:
     branches:
-      - main
+      - master
     paths:
-      - 'main.tf'
-      - 'provider.tf'
-      - 'variables.tf'
-      - 'webinit/**'
+      - 'terraform/webinit/**'
 
 jobs:
   terraform:
@@ -17,7 +14,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: ./terraform
+        working-directory: ./terraform/webinit
 
     env:
       TF_VAR_gcp_project_id: ${{ secrets.GCP_PROJECT_ID }}

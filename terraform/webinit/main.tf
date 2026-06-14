@@ -17,7 +17,8 @@ resource "google_storage_bucket_iam_member" "public_rule" {
 }
 
 locals {
-  website_files = fileset("${path.module}/website", "**/*")
+  website_source_dir = "${path.module}/webcontent"
+  website_files = fileset(local.website_source_dir, "**/*")
 
   mime_types = {
     ".html"  = "text/html"
@@ -31,7 +32,7 @@ resource "google_storage_bucket_object" "website_files" {
   for_each = local.website_files
 
   name   = each.value
-  source = "${path.module}/website/${each.value}"
+  source = "${local.website_source_dir}/${each.value}"
   bucket = google_storage_bucket.website.name
 
   content_type = lookup(
