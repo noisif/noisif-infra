@@ -70,6 +70,7 @@ resource "cloudflare_ruleset" "www_redirect" {
   phase       = "http_request_dynamic_redirect"
 
   rules = [{
+    description = "Redirect WWW to Root"
     expression  = "(http.host eq \"www.noisif.xyz\")"
     action      = "redirect"
     enabled     = true
