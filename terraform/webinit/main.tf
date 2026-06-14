@@ -59,22 +59,21 @@ resource "cloudflare_ruleset" "www_redirect" {
   kind        = "zone"
   phase       = "http_request_dynamic_redirect"
 
-  rules = [
-    {
-      expression  = "http.host eq \"www.noisif.xyz\""
-      action      = "redirect"
-      enabled     = true
+  rules {
+    ref         = "redirect_www_to_root"
+    expression  = "(http.host eq \"www.noisif.xyz\")"
+    action      = "redirect"
 
-      action_parameters = {
-        from_value = {
-          status_code           = 301
-          preserve_query_string = true
+    action_parameters {
+      from_value {
+        status_code = 301
 
-          target_url = {
-            expression = "concat(\"https://noisif.xyz\", http.request.uri.path)"
-          }
+        target_url {
+          expression = "concat(\"https://noisif.xyz\", http.request.uri.path)"
         }
+
+        preserve_query_string = true
       }
     }
-  ]
+  }
 }
