@@ -35,6 +35,9 @@ jobs:
       - name: TF init
         run: terraform init
 
+      - name: Fix Cloudflare Bug (State RM)
+        run: terraform state rm cloudflare_zone_settings_override.website_settings || true
+
       - name: TF plan
         run: terraform plan
 
