@@ -45,31 +45,44 @@ resource "google_storage_bucket_object" "website_files" {
   cache_control = "public, max-age=0, s-maxage=60"
 }
 
-resource "cloudflare_record" "website_dns" {
+resource "cloudflare_dns_record" "website_dns" {
   zone_id = var.cloudflare_zone_id
-  name    = "noisif.xyz"
+  name    = "@" 
   content = "c.storage.googleapis.com"
   type    = "CNAME"
   proxied = true
+  ttl     = 1
 }
 
-resource "cloudflare_record" "www_dns" {
+resource "cloudflare_dns_record" "www_dns" {
   zone_id = var.cloudflare_zone_id
   name    = "www"
   content = "noisif.xyz"
   type    = "CNAME"
   proxied = true
+  ttl     = 1
 }
 
-resource "cloudflare_page_rule" "www_redirect" {
-  zone_id  = var.cloudflare_zone_id
-  target   = "www.noisif.xyz/*"
-  status   = "active"
+resource "cloudflare_ruleset" "www_redirect" {
+  zone_id     = var.cloudflare_zone_id
+  name        = "Redirect WWW to Root"
+  kind        = "zone"
+  phase       = "http_request_dynamic_redirect"
 
-  actions = {
-    forwarding_url = {
-      status_code = 301
-      url         = "https://noisif.xyz/$1"
+  rules = [{
+    expression  = "(http.host eq \"www.noisif.xyz\")"
+    action      = "redirect"
+    enabled     = true
+
+    action_parameters = {
+      from_value = {
+        status_code           = 301
+        preserve_query_string = true
+
+        target_url = {
+          expression = "concat(\"https://noisif.xyz\", http.request.uri.path)"
+        }
+      }
     }
-  }
+  }]
 }
