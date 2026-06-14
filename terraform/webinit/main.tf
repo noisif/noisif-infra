@@ -58,17 +58,30 @@ resource "cloudflare_record" "www_dns" {
   proxied = true
 }
 
-resource "cloudflare_zone_settings_override" "website_settings" {
-  zone_id = var.cloudflare_zone_id
+resource "cloudflare_zone_setting" "ssl_mode" {
+  zone_id    = var.cloudflare_zone_id
+  setting_id = "ssl"
+  value      = "flexible"
+}
 
-  settings {
-    ssl = "flexible"
-    always_use_https = "on"
-    minify {
-      html = "on"
-      css  = "on"
-      js   = "on"
-    }
-    min_tls_version = "1.2"
-  }
+resource "cloudflare_zone_setting" "https_redirect" {
+  zone_id    = var.cloudflare_zone_id
+  setting_id = "always_use_https"
+  value      = "on"
+}
+
+resource "cloudflare_zone_setting" "tls_version" {
+  zone_id    = var.cloudflare_zone_id
+  setting_id = "min_tls_version"
+  value      = "1.2"
+}
+
+resource "cloudflare_zone_setting" "minify_code" {
+  zone_id    = var.cloudflare_zone_id
+  setting_id = "minify"
+  value      = jsonencode({
+    css  = "on"
+    html = "on"
+    js   = "on"
+  })
 }
